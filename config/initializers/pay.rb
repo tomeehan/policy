@@ -17,6 +17,13 @@ Pay.setup do |config|
   }
 end
 
+# Use Inter font for full UTF-8 support in PDFs
+# https://github.com/rsms/inter
+Receipts.default_font = {
+  bold: Rails.root.join("app/assets/fonts/Inter-Bold.ttf"),
+  normal: Rails.root.join("app/assets/fonts/Inter-Regular.ttf")
+}
+
 ActiveSupport.on_load :pay_subscription do
   has_prefix_id :sub
   delegate :currency, to: :plan
@@ -38,13 +45,4 @@ ActiveSupport.on_load :pay_charge do
   def complete_referral
     customer.owner.owner.referral&.complete!
   end
-end
-
-Rails.configuration.to_prepare do
-  # Use Inter font for full UTF-8 support in PDFs
-  # https://github.com/rsms/inter
-  Receipts.default_font = {
-    bold: Rails.root.join("app/assets/fonts/Inter-Bold.ttf"),
-    normal: Rails.root.join("app/assets/fonts/Inter-Regular.ttf")
-  }
 end
