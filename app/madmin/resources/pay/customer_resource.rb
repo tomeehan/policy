@@ -3,8 +3,9 @@ class Pay::CustomerResource < Madmin::Resource
 
   # Attributes
   attribute :id, form: false
-  attribute :processor, form: false
-  attribute :processor_id, form: false
+  attribute :owner, index: true
+  attribute :processor, form: false, index: true
+  attribute :processor_id, form: false, index: true
   attribute :currency, form: false
   attribute :default, form: false
   attribute :created_at, form: false
@@ -16,7 +17,6 @@ class Pay::CustomerResource < Madmin::Resource
   attribute :invoice_credit_balance, form: false
 
   # Associations
-  attribute :owner
   attribute :charges, form: false
   attribute :subscriptions, form: false
   attribute :payment_methods, form: false

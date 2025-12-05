@@ -1,14 +1,20 @@
 class Pay::SubscriptionResource < Madmin::Resource
   menu parent: "Payments", position: 2
 
+  scope :active
+  scope :on_trial
+  scope :past_due
+  scope :unpaid
+  scope :canceled
+
   # Attributes
   attribute :id, form: false
   attribute :name
-  attribute :processor_id
-  attribute :processor_plan
-  attribute :quantity
+  attribute :processor_id, index: true
+  attribute :processor_plan, index: true
+  attribute :quantity, index: true
   attribute :trial_ends_at
-  attribute :ends_at
+  attribute :ends_at, index: true
   attribute :created_at, form: false
   attribute :updated_at, form: false
   attribute :status
