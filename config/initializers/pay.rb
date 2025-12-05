@@ -17,13 +17,9 @@ Pay.setup do |config|
   }
 end
 
-module SubscriptionExtensions
-  extend ActiveSupport::Concern
-
-  included do
-    has_prefix_id :sub
-    delegate :currency, to: :plan
-  end
+ActiveSupport.on_load :pay_subscription do
+  has_prefix_id :sub
+  delegate :currency, to: :plan
 
   def plan
     @plan ||= Plan.where("#{customer.processor}_id": processor_plan).first
@@ -34,13 +30,9 @@ module SubscriptionExtensions
   end
 end
 
-module ChargeExtensions
-  extend ActiveSupport::Concern
-
-  included do
-    has_prefix_id :ch
-    after_create :complete_referral, if: -> { defined?(Refer) }
-  end
+ActiveSupport.on_load :pay_charge do
+  has_prefix_id :ch
+  after_create :complete_referral, if: -> { defined?(Refer) }
 
   # Mark the account owner's referral complete on the first successful payment
   def complete_referral
@@ -49,9 +41,6 @@ module ChargeExtensions
 end
 
 Rails.configuration.to_prepare do
-  Pay::Subscription.include SubscriptionExtensions
-  Pay::Charge.include ChargeExtensions
-
   # Use Inter font for full UTF-8 support in PDFs
   # https://github.com/rsms/inter
   Receipts.default_font = {
