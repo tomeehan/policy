@@ -10,7 +10,7 @@ module Jumpstart
 
     config.to_prepare do
       if Rails.env.development?
-        ::ApplicationController.include(Jumpstart::Welcome)
+        ::ApplicationController.include Jumpstart::Welcome
       end
     end
 

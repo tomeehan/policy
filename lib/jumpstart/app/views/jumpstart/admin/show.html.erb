@@ -2,7 +2,7 @@
   <div data-controller="tabs" data-tabs-update-anchor-value="true" class="flex">
     <div class="sticky top-0 w-full px-4 pt-4 md:w-1/5 md:max-w-[300px] lg:px-8">
       <%= link_to root_path, class: "block" do %>
-        <%= inline_svg_tag "jumpstart.svg", title: "Logo", aria: true, class: "fill-current text-gray-800 dark:text-gray-200" %>
+        <%= render_svg "jumpstart", class: "fill-current text-gray-800 dark:text-gray-200" %>
       <% end %>
 
       <div class="mt-4 flex flex-col gap-2">
