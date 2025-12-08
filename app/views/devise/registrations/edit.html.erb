@@ -37,7 +37,7 @@
         <% if I18n.available_locales.length > 1 %>
           <div class="form-group">
             <%= form.label :preferred_language %>
-            <%= form.select :preferred_language, language_options, {}, { class: "select" } %>
+            <%= form.select :preferred_language, I18n.available_locales, {}, { class: "select" } %>
           </div>
         <% end %>
 
