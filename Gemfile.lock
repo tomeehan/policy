@@ -175,9 +175,6 @@ GEM
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
-    inline_svg (1.10.0)
-      activesupport (>= 3.0)
-      nokogiri (>= 1.6)
     invisible_captcha (2.3.0)
       rails (>= 5.2)
     io-console (0.8.1)
@@ -523,7 +520,6 @@ DEPENDENCIES
   hotwire_combobox (~> 0.3)
   image_processing (~> 1.12)
   importmap-rails
-  inline_svg (~> 1.6)
   invisible_captcha (~> 2.0)
   jbuilder (~> 2.14)
   jumpstart!
@@ -619,7 +615,6 @@ CHECKSUMS
   i18n (1.14.7) sha256=ceba573f8138ff2c0915427f1fc5bdf4aa3ab8ae88c8ce255eb3ecf0a11a5d0f
   image_processing (1.14.0) sha256=754cc169c9c262980889bec6bfd325ed1dafad34f85242b5a07b60af004742fb
   importmap-rails (2.2.2) sha256=729f5b1092f832780829ade1d0b46c7e53d91c556f06da7254da2977e93fe614
-  inline_svg (1.10.0) sha256=5b652934236fd9f8adc61f3fd6e208b7ca3282698b19f28659971da84bf9a10f
   invisible_captcha (2.3.0) sha256=309ee5a5e891ecfb732c85b12f1aa9252a648df6f2761b3b41205e824e30ff15
   io-console (0.8.1) sha256=1e15440a6b2f67b6ea496df7c474ed62c860ad11237f29b3bd187f054b925fcb
   irb (1.15.3) sha256=4349edff1efa7ff7bfd34cb9df74a133a588ba88c2718098b3b4468b81184aaa
