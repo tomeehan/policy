@@ -30,8 +30,9 @@ module SetCurrentRequestDetails
     Account.includes(:payment_processor, :users).find_by(subdomain: request.subdomains.first)
   end
 
+  # API controllers don't support cookies
   def account_from_cookie
-    return unless Jumpstart::Multitenancy.session? && user_signed_in? && (account_id = cookies.signed[:account_id])
+    return unless Jumpstart::Multitenancy.session? && respond_to?(:cookies, true) && user_signed_in? && (account_id = cookies.signed[:account_id])
     current_user.accounts.includes(:payment_processor, :users).find_by(id: account_id)
   end
 

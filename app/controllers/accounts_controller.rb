@@ -78,7 +78,7 @@ class AccountsController < Accounts::BaseController
       redirect_to root_url(script_name: "/#{@account.id}")
 
     else
-      cookies.signed.permanent[:account_id] = { value: @account.id, httponly: true, same_site: :lax }
+      cookies.signed.permanent[:account_id] = {value: @account.id, httponly: true, same_site: :lax}
       redirect_to url_from(params[:return_to]) || root_path
     end
   end
