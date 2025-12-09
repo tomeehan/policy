@@ -15,7 +15,7 @@ module SetCurrentRequestDetails
     Current.user = current_user
 
     # Account may already be set by the AccountMiddleware
-    Current.account ||= account_from_domain || account_from_subdomain || account_from_param || account_from_session || fallback_account
+    Current.account ||= account_from_domain || account_from_subdomain || account_from_param || account_from_cookie || fallback_account
 
     set_current_tenant(Current.account) if defined? ActsAsTenant
   end
@@ -30,8 +30,8 @@ module SetCurrentRequestDetails
     Account.includes(:payment_processor, :users).find_by(subdomain: request.subdomains.first)
   end
 
-  def account_from_session
-    return unless Jumpstart::Multitenancy.session? && user_signed_in? && (account_id = session[:account_id])
+  def account_from_cookie
+    return unless Jumpstart::Multitenancy.session? && user_signed_in? && (account_id = cookies.signed[:account_id])
     current_user.accounts.includes(:payment_processor, :users).find_by(id: account_id)
   end
 
