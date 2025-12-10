@@ -8,19 +8,13 @@ module Jumpstart
   autoload :Omniauth, "jumpstart/omniauth"
   autoload :SubscriptionExtensions, "jumpstart/subscription_extensions"
 
-  def self.restart
-    run_command "rails restart"
-  end
+  def self.restart = run_command "rails restart"
 
   # https://stackoverflow.com/a/25615344/277994
-  def self.bundle
-    run_command "bundle"
-  end
+  def self.bundle = run_command "bundle install"
 
   def self.run_command(command)
-    Bundler.with_original_env do
-      system command
-    end
+    Bundler.with_original_env { system command }
   end
 
   def self.find_plan(id)
