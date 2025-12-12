@@ -10,6 +10,11 @@ Controllers, Views, Helpers, and most Models have been moved to `lib/jumpstart/a
 
 To override something, copy the file from `/lib/jumpstart/app` into `app` and make your changes.
 
+The `bin/rails generate jumpstart:override path` command will copy files to your app for overriding. You can pass in a path to a file or directory and they'll be copied over to your app.
+
+To check for differences between your copy and Jumpstart's version, use diff to compare the files.
+For example, `diff lib/jumpstart/app/models/account_user.rb app/models/account_user.rb`
+
 Other notable changes:
 
 * `StaticController` has been renamed to `PublicController`
