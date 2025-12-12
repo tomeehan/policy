@@ -75,6 +75,11 @@ end
 gem "action_text-trix", "~> 2.1"
 
 # Jumpstart Pro dependencies
+require_relative "lib/jumpstart/lib/jumpstart/configuration"
+begin
+  load "config/jumpstart"
+rescue LoadError
+end
 eval_gemfile "Gemfile.jumpstart"
 
 # We recommend using strong migrations when your app is in production
