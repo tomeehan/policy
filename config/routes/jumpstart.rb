@@ -16,11 +16,7 @@ draw :users
 resources :announcements, only: [:index, :show]
 
 namespace :action_text do
-  resources :embeds, only: [:create], constraints: {id: /[^\/]+/} do
-    collection do
-      get :patterns
-    end
-  end
+  resources :embeds, only: [:create], constraints: {id: /[^\/]+/}
 end
 
 scope controller: :public do

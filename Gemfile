@@ -71,8 +71,8 @@ end
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 5.1"
 
-# Use the latest Trix
-gem "action_text-trix", "~> 2.1"
+# ActionText editor
+gem "lexxy", "~> 0.1.23.beta"
 
 # Jumpstart Pro dependencies
 require_relative "lib/jumpstart/lib/jumpstart/configuration"

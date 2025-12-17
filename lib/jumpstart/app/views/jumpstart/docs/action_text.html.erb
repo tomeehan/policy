@@ -19,17 +19,14 @@
 
 <%= h2_with_anchor "User Mentions (@mentions)" %>
 
-<p>We have preinstalled Action Text for you in Jumpstart Pro and added User mentions so you can easily reference users. By default, it will only search users of the current account. You can modify this to search all users depending on your needs.</p>
+<p>Jumpstart Pro comes with Action Text with the <%= link_to "Lexxy editor", "https://github.com/basecamp/lexxy", target: :_blank %> and added User mentions so you can easily reference users. By default, it will only search users of the current account. You can modify this to search all users depending on your needs in the <code>Users::MentionsController</code>.</p>
 <p>Scaffolds have been modified to automatically enable this feature for <code>rich_text_area</code> fields.</p>
-<p>You can add it to your own rich_text_area by simply adding the following Stimulus data attributes:</p>
+<p>You can add it to your own rich_text_area by simply adding the following code:</p>
 
 <div class="not-prose">
-  <pre><code>&lt;%= form.rich_text_area(
-  :body,
-  data: {
-    controller: "mentions",
-    mentions_target: "field"
-  } %&gt;</code></pre>
+  <pre><code>&lt;%= form.rich_text_area :body do %&gt;
+  &lt;lexxy-prompt trigger="@" src="&lt;%= users_mentions_path &gt;" name="mention" remote-filtering supports-space-in-searches&gt;&lt;/lexxy-prompt&gt;
+&lt;% end %&gt;</code></pre>
 </div>
 
 <p>To disable mentions for a field, simply remove the data attributes.</p>

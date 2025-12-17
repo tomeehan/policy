@@ -1,12 +1,9 @@
 class Users::MentionsController < ApplicationController
   before_action :authenticate_user!
+  layout false
 
   def index
-    @users = searchable_users.search(params[:query]).with_attached_avatar.limit(10)
-
-    respond_to do |format|
-      format.json
-    end
+    @users = searchable_users.search(params[:filter]).with_attached_avatar.limit(10)
   end
 
   private

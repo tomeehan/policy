@@ -12,6 +12,10 @@ module User::Mentions
     caption || name
   end
 
+  def content_type
+    "application/vnd.actiontext.user"
+  end
+
   def to_combobox_display
     name
   end

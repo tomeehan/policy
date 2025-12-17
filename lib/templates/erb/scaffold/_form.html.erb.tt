@@ -16,7 +16,9 @@
     <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, multiple: true, class: "form-control" %>
 <%- elsif attribute.rich_text? -%>
     <%%= form.label :<%= attribute.column_name %> %>
-    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, data: { controller: "mentions", mentions_target: "field" } %>
+    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, data: {controller: "unfurl-link", action: "lexxy:insert-link->unfurl-link#unfurl"} do %>
+      <lexxy-prompt trigger="@" src="<%%= users_mentions_path %>" name="user" remote-filtering supports-space-in-searches></lexxy-prompt>
+    <%% end %>
 <%- elsif attribute.field_type == :check_box -%>
     <%%= form.label :<%= attribute.column_name %> %>
     <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, class: "form-checkbox" %>

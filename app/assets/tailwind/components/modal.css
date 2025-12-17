@@ -1,6 +1,5 @@
 /* Prevent scrolling while dialog is open */
 body:has(dialog[open]) {
-  filter: blur(4px);
   overflow: hidden;
 }
 

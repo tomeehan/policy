@@ -21,7 +21,6 @@
 @import "./themes/jumpstart.css" layer(theme);
 
 @import "./components/base.css" layer(components);
-@import "./components/actiontext.css" layer(components);
 @import "./components/alert.css" layer(components);
 @import "./components/animation.css" layer(components);
 @import "./components/announcements.css" layer(components);
@@ -44,3 +43,4 @@
 @import "./components/typography.css" layer(components);
 @import "./components/wells.css" layer(components);
 @import "./components/braintree.css" layer(components);
+@import "./components/lexxy.css";

@@ -9,7 +9,7 @@
   }
 }
 
-.form-control, trix-editor, trix-toolbar {
+.form-control {
   background-color: var(--base-bg-low);
   border: 1px solid var(--base-border-tertiary);
   border-radius: 6px;
@@ -51,17 +51,6 @@
     color: var(--base-text-tertiary);
     cursor: not-allowed;
   }
-}
-
-trix-toolbar {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom: 0;
-}
-
-trix-editor {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
 }
 
 select {
