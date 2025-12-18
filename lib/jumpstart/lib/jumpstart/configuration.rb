@@ -10,9 +10,9 @@ module Jumpstart
   class Configuration
     QUEUE_ADAPTERS = {
       "I'll configure my own" => nil,
-      "Async" => :async,
-      "SolidQueue" => :solid_queue,
-      "Sidekiq" => :sidekiq
+      "Async" => "async",
+      "SolidQueue" => "solid_queue",
+      "Sidekiq" => "sidekiq"
     }.freeze
 
     def job_command(processor)
@@ -164,8 +164,8 @@ module Jumpstart
       @domain = options["domain"] || "example.com"
       @support_email = options["support_email"] || "support@example.com"
       @default_from_email = options["default_from_email"] || "My App <no-reply@example.com>"
-      @background_job_processor = QUEUE_ADAPTERS.values.map(&:to_s).include?(options["background_job_processor"]) ? options["background_job_processor"] : nil
-      @email_provider = options["email_provider"]
+      @background_job_processor = QUEUE_ADAPTERS.values.include?(options["background_job_processor"]) ? options["background_job_processor"] : nil
+      @email_provider = options["email_provider"].map(&:to_s)
       @account_types = options["account_types"] || (cast_to_boolean(options["personal_accounts"], default: true) ? "both" : "team")
       @apns = cast_to_boolean(options["apns"])
       @fcm = cast_to_boolean(options["fcm"])
