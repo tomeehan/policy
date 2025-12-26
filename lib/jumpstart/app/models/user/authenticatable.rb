@@ -4,7 +4,7 @@ module User::Authenticatable
   included do
     include User::TwoFactorAuthentication
 
-    devise(*[:database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :confirmable, (:omniauthable if defined? OmniAuth)].compact)
+    devise(*[:database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, (:omniauthable if defined? OmniAuth)].compact)
     has_referrals if defined?(::Refer)
 
     has_many :api_tokens, dependent: :destroy
