@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :policy_documents, path: "policies"
+
   authenticated :user do
     root to: "dashboard#show", as: :user_root
     # Alternate route to use if logged in users should still see public root
