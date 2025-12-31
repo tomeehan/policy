@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_04_18_192532) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_31_012645) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -63,6 +63,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_04_18_192532) do
     t.string "domain"
     t.text "extra_billing_info"
     t.string "name", null: false
+    t.datetime "onboarding_completed_at"
     t.bigint "owner_id"
     t.boolean "personal", default: false
     t.integer "seats", default: 1
@@ -231,6 +232,16 @@ ActiveRecord::Schema[8.1].define(version: 2025_04_18_192532) do
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_notifications_on_account_id"
     t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient_type_and_recipient_id"
+  end
+
+  create_table "onboarding_policies", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "uploaded_by_id", null: false
+    t.index ["account_id"], name: "index_onboarding_policies_on_account_id"
+    t.index ["uploaded_by_id"], name: "index_onboarding_policies_on_uploaded_by_id"
   end
 
   create_table "pay_charges", force: :cascade do |t|
@@ -456,6 +467,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_04_18_192532) do
   add_foreign_key "accounts", "users", column: "owner_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "api_tokens", "users"
+  add_foreign_key "onboarding_policies", "account_users", column: "uploaded_by_id"
+  add_foreign_key "onboarding_policies", "accounts"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
