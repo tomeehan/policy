@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_31_012645) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_31_013404) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -365,6 +365,14 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_31_012645) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
+  create_table "policy_documents", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_policy_documents_on_account_id"
+  end
+
   create_table "standards", force: :cascade do |t|
     t.string "blurb", default: "", null: false
     t.string "color"
@@ -472,6 +480,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_31_012645) do
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
+  add_foreign_key "policy_documents", "accounts"
   add_foreign_key "tool_members", "account_tools"
   add_foreign_key "tool_members", "account_users"
   add_foreign_key "tool_standards", "standards"

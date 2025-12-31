@@ -40,7 +40,12 @@ class Onboarding::PoliciesController < ApplicationController
   end
 
   def complete
-    current_account.update!(onboarding_completed_at: Time.current)
+    ActiveRecord::Base.transaction do
+      current_account.onboarding_policies.find_each do |onboarding_policy|
+        current_account.policy_documents.create!(name: onboarding_policy.name)
+      end
+      current_account.update!(onboarding_completed_at: Time.current)
+    end
     redirect_to root_path, notice: "Welcome to Policy Pro!"
   end
 
