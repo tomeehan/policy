@@ -1,8 +1,8 @@
 {
-  "name": "Jumpstart Pro",
-  "description": "A Ruby on Rails template for SaaS apps and more.",
-  "website": "https://jumpstartrails.com",
-  "logo": "https://jumpstartpro.b-cdn.net/mark.svg",
+  "name": "Policy Pro",
+  "description": "Policy management solution.",
+  "website": "",
+  "logo": "",
   "scripts": {
     "postdeploy": "bundle exec rails db:migrate"
   },
