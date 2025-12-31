@@ -27,13 +27,13 @@ default: &default
 development:
   primary:
     <<: *default
-    database: jumpstart_development
+    database: policy_development
 
     # The specified database role being used to connect to postgres.
     # To create additional roles in postgres see `$ createuser --help`.
     # When left blank, postgres will use the default role. This is
     # the same name as the operating system user that initialized the database.
-    #username: jumpstart
+    #username: policy
 
     # The password associated with the postgres role (username).
     #password:
@@ -58,15 +58,15 @@ development:
 
   cache:
     <<: *default
-    database: jumpstart_development_cache
+    database: policy_development_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *default
-    database: jumpstart_development_queue
+    database: policy_development_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *default
-    database: jumpstart_development_cable
+    database: policy_development_cable
     migrations_paths: db/cable_migrate
 
 # Warning: The database defined as "test" will be erased and
@@ -74,28 +74,28 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: jumpstart_test
+  database: policy_test
 
 staging:
   primary: &primary_staging
     <<: *default
-    database: jumpstart_staging
-    username: jumpstart
+    database: policy_staging
+    username: policy
     password: <%= ENV["POSTGRES_PASSWORD"] %>
 
   cache:
     <<: *primary_staging
-    database: jumpstart_staging_cache
+    database: policy_staging_cache
     migrations_paths: db/cache_migrate
     # Or set CACHE_DATABASE_URL to override
   queue:
     <<: *primary_staging
-    database: jumpstart_staging_queue
+    database: policy_staging_queue
     migrations_paths: db/queue_migrate
     # Or set QUEUE_DATABASE_URL to override
   cable:
     <<: *primary_staging
-    database: jumpstart_staging_cable
+    database: policy_staging_cable
     migrations_paths: db/cable_migrate
     # Or set CABLE_DATABASE_URL to override
 
@@ -122,25 +122,19 @@ staging:
 production:
   primary: &primary_production
     <<: *default
-    database: jumpstart_production
-    username: jumpstart
-    password: <%= ENV["POSTGRES_PASSWORD"] %>
-    # Or set DATABASE_URL to override
+    url: <%= ENV["DATABASE_URL"] %>
 
   cache:
     <<: *primary_production
-    database: jumpstart_production_cache
+    url: <%= ENV.fetch("CACHE_DATABASE_URL") { ENV["DATABASE_URL"] } %>
     migrations_paths: db/cache_migrate
-    # Or set CACHE_DATABASE_URL to override
 
   queue:
     <<: *primary_production
-    database: jumpstart_production_queue
+    url: <%= ENV.fetch("QUEUE_DATABASE_URL") { ENV["DATABASE_URL"] } %>
     migrations_paths: db/queue_migrate
-    # Or set QUEUE_DATABASE_URL to override
 
   cable:
     <<: *primary_production
-    database: jumpstart_production_cable
+    url: <%= ENV.fetch("CABLE_DATABASE_URL") { ENV["DATABASE_URL"] } %>
     migrations_paths: db/cable_migrate
-    # Or set CABLE_DATABASE_URL to override
