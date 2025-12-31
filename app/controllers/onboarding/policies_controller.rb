@@ -71,7 +71,7 @@ class Onboarding::PoliciesController < ApplicationController
     return nil unless word_document?(content_type)
 
     onboarding_policy.document.open do |file|
-      PandocRuby.docx(file.path).to_markdown
+      `pandoc -f docx -t markdown "#{file.path}"`
     end
   rescue => e
     Rails.logger.error "Failed to parse document: #{e.message}"
