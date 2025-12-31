@@ -87,3 +87,6 @@ eval_gemfile "Gemfile.jumpstart"
 
 # Parse Word documents to markdown
 gem "pandoc-ruby"
+
+# Render markdown
+gem "kramdown"

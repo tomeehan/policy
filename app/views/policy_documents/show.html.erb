@@ -1,0 +1,19 @@
+<% content_for :title, @policy_document.name %>
+
+<div class="container mx-auto p-4">
+  <div class="my-8">
+    <div class="mb-6">
+      <%= link_to "← Back to Policies", policy_documents_path, class: "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white" %>
+    </div>
+
+    <h1 class="mb-6"><%= @policy_document.name %></h1>
+
+    <% if @policy_document.content.present? %>
+      <div class="prose dark:prose-invert max-w-none">
+        <%= render_markdown(@policy_document.content) %>
+      </div>
+    <% else %>
+      <p class="text-gray-600 dark:text-gray-400">No content available for this policy.</p>
+    <% end %>
+  </div>
+</div>
