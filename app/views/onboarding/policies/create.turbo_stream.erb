@@ -1,1 +1,1 @@
-<%= turbo_stream.append "policies", @policy %>
+<%= turbo_stream.append "policies", partial: "onboarding/policies/policy", locals: { policy: @policy } %>

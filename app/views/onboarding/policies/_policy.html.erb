@@ -1,12 +1,13 @@
-<%= turbo_frame_tag policy do %>
+<%= turbo_frame_tag dom_id(policy) do %>
   <div class="flex items-center justify-between p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
     <div class="flex items-center gap-3 flex-1">
       <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
       </svg>
 
-      <%= form_with model: [:onboarding, policy], class: "flex-1", data: { controller: "autosave", autosave_delay_value: 500 } do |f| %>
-        <%= f.text_field :name,
+      <%= form_with url: onboarding_policy_path(policy), method: :patch, class: "flex-1", data: { controller: "autosave", autosave_delay_value: 500 } do |f| %>
+        <%= f.text_field :name, value: policy.name,
+            name: "onboarding_policy[name]",
             class: "w-full bg-transparent border-0 border-b border-transparent hover:border-gray-300 focus:border-primary focus:ring-0 px-0 py-1 text-gray-900 dark:text-white",
             data: { action: "input->autosave#save" } %>
       <% end %>

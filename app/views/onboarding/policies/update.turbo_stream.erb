@@ -1,1 +1,1 @@
-<%= turbo_stream.replace @policy %>
+<%= turbo_stream.replace dom_id(@policy), partial: "onboarding/policies/policy", locals: { policy: @policy } %>
