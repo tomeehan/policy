@@ -84,3 +84,6 @@ eval_gemfile "Gemfile.jumpstart"
 
 # We recommend using strong migrations when your app is in production
 # gem "strong_migrations"
+
+# Parse Word documents to markdown
+gem "pandoc-ruby"
