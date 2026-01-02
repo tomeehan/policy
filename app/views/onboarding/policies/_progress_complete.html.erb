@@ -1,0 +1,26 @@
+<% total = account.onboarding_policies.count %>
+
+<div class="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-sm border border-gray-200 dark:border-gray-700">
+  <div class="mb-6">
+    <div class="flex justify-center mb-4">
+      <svg class="h-12 w-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    </div>
+
+    <p class="text-4xl font-bold text-gray-900 dark:text-white">
+      <%= total %>/<%= total %>
+    </p>
+    <p class="text-gray-600 dark:text-gray-400 mt-1">documents processed</p>
+  </div>
+
+  <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-6">
+    <div class="bg-green-500 h-3 rounded-full" style="width: 100%"></div>
+  </div>
+
+  <p class="text-green-600 dark:text-green-400 font-medium mb-6">
+    All documents have been processed successfully!
+  </p>
+
+  <%= link_to "View Dashboard", root_path, class: "btn btn-primary btn-large" %>
+</div>

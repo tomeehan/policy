@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :policies, only: [:index, :create, :update, :destroy] do
       collection do
         post :complete
+        get :progress
       end
     end
   end

@@ -1,0 +1,16 @@
+<% content_for :title, "Processing Your Policies" %>
+
+<div class="container mx-auto max-w-xl p-4 py-12">
+  <div class="text-center">
+    <h1 class="text-3xl font-bold mb-4">Processing Your Policies</h1>
+    <p class="text-gray-600 dark:text-gray-400 mb-8">
+      We're extracting content from your documents. This may take a few minutes.
+    </p>
+
+    <%= turbo_stream_from "onboarding_progress_#{current_account.id}" %>
+
+    <div id="onboarding-progress">
+      <%= render "onboarding/policies/progress", account: current_account %>
+    </div>
+  </div>
+</div>

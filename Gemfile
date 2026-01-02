@@ -90,3 +90,7 @@ gem "pandoc-ruby"
 
 # Render markdown
 gem "kramdown"
+
+gem "ruby-openai", "~> 8.3"
+
+gem "dotenv-rails", "~> 3.2", groups: [:development, :test]

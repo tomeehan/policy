@@ -1,1 +1,8 @@
 <%= turbo_stream.remove dom_id(@policy) %>
+<%= turbo_stream.update "get-started-button" do %>
+  <% if current_account.onboarding_policies.any? %>
+    <div class="flex justify-center">
+      <%= button_to "Get Started", complete_onboarding_policies_path, method: :post, class: "btn btn-primary btn-large" %>
+    </div>
+  <% end %>
+<% end %>

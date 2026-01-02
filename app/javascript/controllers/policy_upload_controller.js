@@ -30,8 +30,9 @@ export default class extends Controller {
   }
 
   change(event) {
-    this.uploadFiles(event.target.files)
+    const files = Array.from(event.target.files)
     event.target.value = ""
+    this.uploadFiles(files)
   }
 
   async uploadFiles(files) {

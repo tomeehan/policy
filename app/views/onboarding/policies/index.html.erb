@@ -27,9 +27,11 @@
     <%= render @policies %>
   </div>
 
-  <% if @policies.any? %>
-    <div class="flex justify-center">
-      <%= button_to "Get Started", complete_onboarding_policies_path, method: :post, class: "btn btn-primary btn-large" %>
-    </div>
-  <% end %>
+  <div id="get-started-button">
+    <% if @policies.any? %>
+      <div class="flex justify-center">
+        <%= button_to "Get Started", complete_onboarding_policies_path, method: :post, class: "btn btn-primary btn-large" %>
+      </div>
+    <% end %>
+  </div>
 </div>

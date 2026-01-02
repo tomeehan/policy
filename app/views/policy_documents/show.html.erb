@@ -8,9 +8,13 @@
 
     <h1 class="mb-6"><%= @policy_document.name %></h1>
 
+    <% if @policy_document.published_at.present? %>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Published: <%= @policy_document.published_at.strftime("%B %d, %Y") %></p>
+    <% end %>
+
     <% if @policy_document.content.present? %>
       <div class="prose dark:prose-invert max-w-none">
-        <%= render_markdown(@policy_document.content) %>
+        <%= render_markdown(@policy_document.content, strip_title: @policy_document.name) %>
       </div>
     <% else %>
       <p class="text-gray-600 dark:text-gray-400">No content available for this policy.</p>
