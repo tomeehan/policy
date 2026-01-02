@@ -6,7 +6,7 @@ Jumpstart.config = Jumpstart::Configuration.new({"application_name"=>"Policy Pro
  "default_from_email"=>"Policy Pro <no-reply@example.com>",
  "background_job_processor"=>nil,
  "email_provider"=>nil,
- "account_types"=>"both",
+ "account_types"=>"teams",
  "apns"=>false,
  "fcm"=>false,
  "integrations"=>[],
