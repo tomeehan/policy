@@ -1,0 +1,88 @@
+<% content_for :title, "Issues" %>
+
+<div class="container mx-auto p-4">
+  <div class="my-8">
+    <h1>Issues</h1>
+
+    <div class="mt-6 flex flex-wrap gap-4">
+      <%= form_with url: issues_path, method: :get, class: "flex flex-wrap gap-4", data: { turbo_frame: "_top" } do |f| %>
+        <div>
+          <%= f.label :policy_document_id, "Policy", class: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" %>
+          <%= f.select :policy_document_id,
+              options_from_collection_for_select(current_account.policy_documents.order(:name), :id, :name, params[:policy_document_id]),
+              { include_blank: "All Policies" },
+              class: "form-select rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800" %>
+        </div>
+
+        <div>
+          <%= f.label :issue_type, "Type", class: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" %>
+          <%= f.select :issue_type,
+              Issue.issue_types.keys.map { |t| [t.titleize, t] },
+              { include_blank: "All Types" },
+              selected: params[:issue_type],
+              class: "form-select rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-800" %>
+        </div>
+
+        <div class="flex items-end">
+          <%= f.submit "Filter", class: "btn btn-secondary" %>
+        </div>
+
+        <% if params[:policy_document_id].present? || params[:issue_type].present? %>
+          <div class="flex items-end">
+            <%= link_to "Clear", issues_path, class: "btn btn-tertiary" %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+    <% if @issues.any? %>
+      <div class="mt-6 space-y-4">
+        <% @issues.each do |issue| %>
+          <div class="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                  <%= case issue.issue_type
+                      when 'conflict' then 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
+                      when 'spelling' then 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+                      when 'cqc_compliance' then 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                      end %>">
+                  <%= issue.issue_type.titleize %>
+                </span>
+
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                  <%= case issue.status
+                      when 'open' then 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                      when 'resolved' then 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                      when 'dismissed' then 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+                      end %>">
+                  <%= issue.status.titleize %>
+                </span>
+              </div>
+
+              <%= link_to issue.policy_document.name,
+                  policy_document_path(issue.policy_document),
+                  class: "text-sm text-primary hover:underline" %>
+            </div>
+
+            <p class="text-gray-700 dark:text-gray-300 mb-3"><%= issue.description %></p>
+
+            <% if issue.excerpt.present? %>
+              <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 py-2 text-gray-600 dark:text-gray-400 italic">
+                "<%= truncate(issue.excerpt, length: 200) %>"
+              </blockquote>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <% if @pagy.last > 1 %>
+        <div class="text-center mt-8">
+          <%== @pagy.series_nav %>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="mt-6 text-gray-600 dark:text-gray-400">No issues found.</p>
+    <% end %>
+  </div>
+</div>

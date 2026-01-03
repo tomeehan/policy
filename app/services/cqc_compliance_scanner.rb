@@ -29,10 +29,10 @@ class CqcComplianceScanner < BaseScanner
       parameters: {
         model: "gpt-4o-mini",
         messages: [
-          { role: "system", content: system_prompt },
-          { role: "user", content: "Policy: #{@policy.name}\n\n#{@policy.content}" }
+          {role: "system", content: system_prompt},
+          {role: "user", content: "Policy: #{@policy.name}\n\n#{@policy.content}"}
         ],
-        response_format: { type: "json_object" }
+        response_format: {type: "json_object"}
       }
     )
 

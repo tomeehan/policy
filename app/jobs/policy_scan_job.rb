@@ -55,7 +55,7 @@ class PolicyScanJob < ApplicationJob
       "policy_scan_#{@policy.id}",
       target: "issues-list",
       partial: "issues/list",
-      locals: { policy_document: @policy, issues: @policy.issues.reload.open }
+      locals: {policy_document: @policy, issues: @policy.issues.reload.open}
     )
   end
 
@@ -70,7 +70,7 @@ class PolicyScanJob < ApplicationJob
       "policy_scan_#{@policy.id}",
       target: "issues-list",
       partial: "issues/list",
-      locals: { policy_document: @policy, issues: @policy.issues.reload.open }
+      locals: {policy_document: @policy, issues: @policy.issues.reload.open}
     )
   end
 end

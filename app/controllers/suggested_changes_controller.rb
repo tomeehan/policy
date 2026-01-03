@@ -9,7 +9,7 @@ class SuggestedChangesController < ApplicationController
       format.html { redirect_to policy_document_path(@policy_document) }
       format.turbo_stream
     end
-  rescue StandardError => e
+  rescue => e
     respond_to do |format|
       format.html { redirect_to policy_document_path(@policy_document), alert: e.message }
       format.turbo_stream do

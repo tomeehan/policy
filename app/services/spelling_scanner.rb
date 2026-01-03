@@ -6,10 +6,10 @@ class SpellingScanner < BaseScanner
       parameters: {
         model: "gpt-4o-mini",
         messages: [
-          { role: "system", content: system_prompt },
-          { role: "user", content: @policy.content }
+          {role: "system", content: system_prompt},
+          {role: "user", content: @policy.content}
         ],
-        response_format: { type: "json_object" }
+        response_format: {type: "json_object"}
       }
     )
 
@@ -22,7 +22,7 @@ class SpellingScanner < BaseScanner
         description: issue_data["description"],
         excerpt: issue_data["excerpt"],
         suggestions: issue_data["suggestions"].map do |s|
-          { original_text: s["original_text"], suggested_text: s["suggested_text"] }
+          {original_text: s["original_text"], suggested_text: s["suggested_text"]}
         end
       )
     end

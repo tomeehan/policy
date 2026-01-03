@@ -26,6 +26,8 @@ Rails.application.routes.draw do
     resources :issues, only: [:index, :show, :update]
   end
 
+  resources :issues, only: [:index]
+
   resources :suggested_changes, only: [] do
     member do
       post :apply
