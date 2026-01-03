@@ -27,7 +27,7 @@ default: &default
 development:
   primary:
     <<: *default
-    database: policy_development
+    database: <%= ENV.fetch("DATABASE_NAME", "policy_development") %>
 
     # The specified database role being used to connect to postgres.
     # To create additional roles in postgres see `$ createuser --help`.
@@ -58,15 +58,15 @@ development:
 
   cache:
     <<: *default
-    database: policy_development_cache
+    database: <%= ENV.fetch("DATABASE_NAME", "policy_development") %>_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *default
-    database: policy_development_queue
+    database: <%= ENV.fetch("DATABASE_NAME", "policy_development") %>_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *default
-    database: policy_development_cable
+    database: <%= ENV.fetch("DATABASE_NAME", "policy_development") %>_cable
     migrations_paths: db/cable_migrate
 
 # Warning: The database defined as "test" will be erased and
@@ -74,7 +74,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: policy_test
+  database: <%= ENV.fetch("DATABASE_NAME", "policy") %>_test
 
 staging:
   primary: &primary_staging
