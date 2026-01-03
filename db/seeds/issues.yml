@@ -1,0 +1,130 @@
+# Issues seed data
+# Each issue is keyed by policy filename (without .md extension)
+# Issues have suggested_changes nested within them
+
+health_and_safety:
+  - issue_type: spelling
+    status: open
+    description: "Misspelling of 'organisations' as 'organsations'"
+    suggested_changes:
+      - action_type: replace_text
+        original_text: "organsations"
+        suggested_text: "organisations"
+        status: pending
+
+  - issue_type: cqc_compliance
+    status: open
+    description: "The policy does not specify how often risk assessments should be reviewed, which is important for maintaining compliance with health and safety regulations."
+    suggested_changes:
+      - action_type: insert_text
+        suggested_text: "Risk assessments will be reviewed at least annually, or sooner following any significant changes, incidents, or near-misses."
+        status: pending
+
+data_protection:
+  - issue_type: cqc_compliance
+    status: open
+    description: "The policy lacks specific guidance on data retention periods for different types of records, which is required for GDPR compliance."
+    suggested_changes:
+      - action_type: insert_text
+        suggested_text: "Care records will be retained for 8 years from the date of last entry. Staff records will be retained for 6 years after employment ends. Financial records will be retained for 7 years."
+        status: pending
+
+  - issue_type: spelling
+    status: open
+    description: "Incorrect capitalisation of 'data Protection act'"
+    suggested_changes:
+      - action_type: replace_text
+        original_text: "data Protection act"
+        suggested_text: "Data Protection Act"
+        status: pending
+
+safeguarding:
+  - issue_type: cqc_compliance
+    status: open
+    description: "The policy does not include contact details for the local safeguarding authority, which should be readily available for staff."
+    suggested_changes:
+      - action_type: insert_text
+        suggested_text: "Local Authority Safeguarding Team contact details are displayed in all office locations and included in staff handbooks. Staff should ensure they are familiar with these contact numbers."
+        status: pending
+
+  - issue_type: conflict
+    status: open
+    description: "The confidentiality policy states information should only be shared on a 'need-to-know basis', but safeguarding policy requires immediate reporting. These could conflict in practice."
+    excerpt: "Information should only be shared on a need-to-know basis"
+    suggested_changes:
+      - action_type: insert_text
+        suggested_text: "Note: Safeguarding concerns take priority over general confidentiality requirements. Staff should not delay reporting safeguarding concerns due to confidentiality considerations."
+        status: pending
+
+complaints:
+  - issue_type: spelling
+    status: open
+    description: "Misspelling of 'recieve' instead of 'receive'"
+    suggested_changes:
+      - action_type: replace_text
+        original_text: "recieve"
+        suggested_text: "receive"
+        status: pending
+
+  - issue_type: cqc_compliance
+    status: open
+    description: "The policy does not mention how complaints data is used to drive service improvements, which is a key CQC requirement."
+    suggested_changes:
+      - action_type: insert_text
+        suggested_text: "Lessons learned from complaints will be shared with staff through team meetings and supervision. Themes and trends will be reported to the management team quarterly to inform service improvements."
+        status: pending
+
+medication:
+  - issue_type: cqc_compliance
+    status: open
+    description: "The policy does not address covert medication administration, which requires specific protocols and documentation."
+    suggested_changes:
+      - action_type: insert_text
+        suggested_text: "Covert medication may only be administered following a best interests decision, with appropriate documentation and regular review. A mental capacity assessment must be completed and recorded."
+        status: pending
+
+  - issue_type: spelling
+    status: open
+    description: "Inconsistent use of 'medication' and 'medicines' throughout the document"
+    suggested_changes:
+      - action_type: replace_text
+        original_text: "medicines"
+        suggested_text: "medication"
+        status: pending
+
+infection_control:
+  - issue_type: cqc_compliance
+    status: open
+    description: "The policy does not specify hand hygiene technique or duration, which should follow WHO guidelines."
+    suggested_changes:
+      - action_type: insert_text
+        suggested_text: "Hand washing should follow the WHO 6-step technique and last for at least 20 seconds. Alcohol hand rub should be applied for at least 15 seconds."
+        status: pending
+
+whistleblowing:
+  - issue_type: cqc_compliance
+    status: open
+    description: "The policy should reference the duty of candour and how it relates to whistleblowing."
+    suggested_changes:
+      - action_type: insert_text
+        suggested_text: "This policy supports our duty of candour obligations. Staff are encouraged to be open and honest about incidents and near-misses, and the organisation is committed to learning from these events."
+        status: pending
+
+emergency_procedures:
+  - issue_type: conflict
+    status: open
+    description: "The emergency procedures state to 'not move the person unless necessary' but evacuation procedures may require moving service users. Clarification needed."
+    excerpt: "Do not move the person unless necessary for safety"
+    suggested_changes:
+      - action_type: replace_text
+        original_text: "Do not move the person unless necessary for safety"
+        suggested_text: "Do not move the person unless necessary for their safety or as part of an evacuation procedure"
+        status: pending
+
+  - issue_type: cqc_compliance
+    status: open
+    description: "The policy lacks specific guidance on personal emergency evacuation plans (PEEPs) for service users with mobility issues."
+    suggested_changes:
+      - action_type: insert_text
+        suggested_text: "Personal Emergency Evacuation Plans (PEEPs) will be developed for all service users with mobility or sensory impairments. PEEPs will be reviewed annually and following any change in the service user's needs."
+        status: pending

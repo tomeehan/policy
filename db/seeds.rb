@@ -65,3 +65,65 @@ puts "  - dev@example.com (system admin, account admin + member)"
 puts "  - admin@example.com (account admin)"
 puts "  - member@example.com (member)"
 puts "All users have password: 'password'"
+
+# Seed policy documents from markdown files
+puts "\nSeeding policy documents..."
+
+policies_dir = Rails.root.join("db/seeds/policies")
+policy_files = Dir.glob(policies_dir.join("*.md")).sort
+
+policies = {}
+policy_files.each do |file|
+  filename = File.basename(file, ".md")
+  name = filename.sub(/^\d+_/, "").titleize.gsub("And", "and").gsub("Cqc", "CQC")
+  content = File.read(file)
+
+  policy = PolicyDocument.find_or_create_by!(account: account, name: name) do |p|
+    p.content = content
+    p.scan_status = :completed
+    p.last_scanned_at = Time.current
+  end
+  policies[filename.sub(/^\d+_/, "")] = policy
+  puts "  - #{name}"
+end
+
+puts "Created #{policies.count} policy documents"
+
+# Seed issues from YAML file
+puts "\nSeeding issues..."
+
+issues_file = Rails.root.join("db/seeds/issues.yml")
+issues_data = YAML.load_file(issues_file)
+
+issue_count = 0
+issues_data.each do |policy_key, policy_issues|
+  policy = policies[policy_key]
+  next unless policy
+
+  policy_issues.each do |issue_data|
+    issue = Issue.find_or_create_by!(
+      policy_document: policy,
+      description: issue_data["description"]
+    ) do |i|
+      i.issue_type = issue_data["issue_type"]
+      i.status = issue_data["status"]
+      i.excerpt = issue_data["excerpt"]
+    end
+
+    issue_data["suggested_changes"]&.each do |change_data|
+      SuggestedChange.find_or_create_by!(
+        issue: issue,
+        suggested_text: change_data["suggested_text"] || ""
+      ) do |sc|
+        sc.action_type = change_data["action_type"]
+        sc.original_text = change_data["original_text"]
+        sc.status = change_data["status"]
+      end
+    end
+
+    issue_count += 1
+  end
+end
+
+puts "Created #{issue_count} issues with suggested changes"
+puts "\nSeeding complete!"
