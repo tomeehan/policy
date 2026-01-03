@@ -111,7 +111,7 @@ jobs:
           REDIS_URL: redis://localhost:6379/0
           RAILS_ENV: test
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-        run: bin/rails db:test:prepare zeitwerk:check && bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb"
+        run: bin/rails db:test:prepare zeitwerk:check assets:precompile && bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb"
 
   system-test:
     runs-on: ubuntu-latest
@@ -156,7 +156,7 @@ jobs:
           REDIS_URL: redis://localhost:6379/0
           RAILS_ENV: test
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-        run: bin/rails db:test:prepare && bundle exec rspec spec/system/
+        run: bin/rails db:test:prepare assets:precompile && bundle exec rspec spec/system/
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v6

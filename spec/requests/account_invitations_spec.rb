@@ -57,7 +57,6 @@ RSpec.describe "Account Invitations", type: :request do
 
       expect(response).to be_redirect
 
-      user = User.order(created_at: :asc).last
       expect(User.last.accounts).to include(account)
       expect { account_invitation.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
