@@ -2,4 +2,7 @@
 
 <% if user_signed_in? %>
   <%= nav_link_to "Policies", policy_documents_path %>
+  <% if Current.account_admin? %>
+    <%= nav_link_to "Issues", issues_path %>
+  <% end %>
 <% end %>

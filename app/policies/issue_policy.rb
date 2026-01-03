@@ -1,19 +1,19 @@
 class IssuePolicy < ApplicationPolicy
   def index?
-    true
+    account_user.admin?
   end
 
   def show?
-    record.account_id.in?(user.user.accounts.ids)
+    account_user.admin? && record.account_id == account_user.account_id
   end
 
   def update?
-    record.account_id.in?(user.user.accounts.ids)
+    account_user.admin? && record.account_id == account_user.account_id
   end
 
   class Scope < Scope
     def resolve
-      scope.where(account: user.user.accounts)
+      scope.where(account_id: account_user.account_id)
     end
   end
 end
