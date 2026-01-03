@@ -46,6 +46,9 @@ RSpec.configure do |config|
     Rails.root.join('test/fixtures')
   ]
 
+  # Use existing file fixtures
+  config.file_fixture_path = Rails.root.join('test/fixtures/files')
+
   config.use_transactional_fixtures = true
 
   # Infer spec type from file location
