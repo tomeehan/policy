@@ -1,8 +1,8 @@
 class SuggestedChange < ApplicationRecord
   belongs_to :issue
 
-  enum :action_type, { replace_text: 0, insert_text: 1, delete_text: 2 }
-  enum :status, { pending: 0, applied: 1, dismissed: 2 }
+  enum :action_type, {replace_text: 0, insert_text: 1, delete_text: 2}
+  enum :status, {pending: 0, applied: 1, dismissed: 2}
 
   validates :suggested_text, presence: true, unless: :delete_text?
   validates :original_text, presence: true, if: -> { replace_text? || delete_text? }

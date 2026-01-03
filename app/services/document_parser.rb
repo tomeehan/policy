@@ -46,7 +46,7 @@ class DocumentParser
 
   def parse_pdf_document(file)
     Dir.mktmpdir do |tmpdir|
-      stdout, stderr, status = Open3.capture3(
+      _, stderr, status = Open3.capture3(
         "pdftoppm", "-png", "-r", "150", file.path, "#{tmpdir}/page"
       )
       unless status.success?
@@ -75,14 +75,14 @@ class DocumentParser
       base64_image = Base64.strict_encode64(File.read(path))
       content << {
         type: "image_url",
-        image_url: { url: "data:image/png;base64,#{base64_image}" }
+        image_url: {url: "data:image/png;base64,#{base64_image}"}
       }
     end
 
     response = client.chat(
       parameters: {
         model: "gpt-4o",
-        messages: [{ role: "user", content: content }],
+        messages: [{role: "user", content: content}],
         max_tokens: 16000
       }
     )
@@ -124,7 +124,7 @@ class DocumentParser
               Return ONLY valid JSON, no markdown code fences.
             PROMPT
           },
-          { role: "user", content: content }
+          {role: "user", content: content}
         ],
         max_tokens: 16000
       }

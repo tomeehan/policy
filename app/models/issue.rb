@@ -5,8 +5,8 @@ class Issue < ApplicationRecord
   has_many :related_policies, through: :issue_related_policies, source: :policy_document
   has_many :suggested_changes, dependent: :destroy
 
-  enum :issue_type, { conflict: 0, spelling: 1, cqc_compliance: 2 }
-  enum :status, { open: 0, resolved: 1, dismissed: 2 }
+  enum :issue_type, {conflict: 0, spelling: 1, cqc_compliance: 2}
+  enum :status, {open: 0, resolved: 1, dismissed: 2}
 
   validates :description, presence: true
   validates :issue_type, presence: true

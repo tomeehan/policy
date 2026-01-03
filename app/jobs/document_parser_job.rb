@@ -34,7 +34,7 @@ class DocumentParserJob < ApplicationJob
       "onboarding_progress_#{account.id}",
       target: "onboarding-progress",
       partial: "onboarding/policies/progress_complete",
-      locals: { account: account }
+      locals: {account: account}
     )
   end
 end

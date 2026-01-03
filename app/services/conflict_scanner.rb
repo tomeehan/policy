@@ -15,8 +15,8 @@ class ConflictScanner < BaseScanner
     return if @other_policies.empty?
 
     messages = [
-      { role: "system", content: system_prompt },
-      { role: "user", content: user_prompt }
+      {role: "system", content: system_prompt},
+      {role: "user", content: user_prompt}
     ]
 
     iterations = 0
@@ -67,7 +67,7 @@ class ConflictScanner < BaseScanner
 
       retries += 1
       if retries <= MAX_RETRIES
-        delay = extract_retry_delay(e) || (BASE_DELAY * (2 ** (retries - 1)))
+        delay = extract_retry_delay(e) || (BASE_DELAY * (2**(retries - 1)))
         Rails.logger.info "ConflictScanner rate limited, retrying in #{delay.round(1)}s (attempt #{retries}/#{MAX_RETRIES})"
         sleep(delay)
         retry
@@ -127,7 +127,7 @@ class ConflictScanner < BaseScanner
           parameters: {
             type: "object",
             properties: {
-              policy_id: { type: "integer" }
+              policy_id: {type: "integer"}
             },
             required: ["policy_id"]
           }
@@ -141,11 +141,11 @@ class ConflictScanner < BaseScanner
           parameters: {
             type: "object",
             properties: {
-              other_policy_id: { type: "integer" },
-              description: { type: "string" },
-              excerpt: { type: "string" },
-              original_text: { type: "string" },
-              suggested_text: { type: "string" }
+              other_policy_id: {type: "integer"},
+              description: {type: "string"},
+              excerpt: {type: "string"},
+              original_text: {type: "string"},
+              suggested_text: {type: "string"}
             },
             required: ["other_policy_id", "description", "excerpt"]
           }
@@ -167,23 +167,23 @@ class ConflictScanner < BaseScanner
   end
 
   def get_policy_content(policy_id)
-    return { error: "Not found" } unless @other_policies.key?(policy_id)
+    return {error: "Not found"} unless @other_policies.key?(policy_id)
 
     policy = PolicyDocument.find(policy_id)
-    { id: policy.id, name: policy.name, content: policy.content }
+    {id: policy.id, name: policy.name, content: policy.content}
   end
 
   def report_conflict(args)
     other_policy = PolicyDocument.find_by(id: args["other_policy_id"])
-    return { error: "Not found" } unless other_policy
+    return {error: "Not found"} unless other_policy
 
     existing_conflict = @policy.issues.conflict.joins(:issue_related_policies)
-      .where(issue_related_policies: { policy_document_id: other_policy.id })
+      .where(issue_related_policies: {policy_document_id: other_policy.id})
       .where(status: :open)
       .exists?
 
     if existing_conflict
-      return { skipped: true, message: "Conflict already reported" }
+      return {skipped: true, message: "Conflict already reported"}
     end
 
     suggestions = []
@@ -202,7 +202,7 @@ class ConflictScanner < BaseScanner
       related_policies: [other_policy]
     )
 
-    { success: true }
+    {success: true}
   end
 
   def user_prompt

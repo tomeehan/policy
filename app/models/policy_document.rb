@@ -2,7 +2,7 @@ class PolicyDocument < ApplicationRecord
   belongs_to :account
   has_many :issues, dependent: :destroy
 
-  enum :scan_status, { idle: 0, scanning: 1, completed: 2, failed: 3 }
+  enum :scan_status, {idle: 0, scanning: 1, completed: 2, failed: 3}
 
   validates :name, presence: true
 

@@ -4,7 +4,7 @@ class Onboarding::Policy < ApplicationRecord
 
   has_one_attached :document
 
-  enum :status, { pending: 0, processing: 1, completed: 2, failed: 3 }
+  enum :status, {pending: 0, processing: 1, completed: 2, failed: 3}
 
   validates :name, presence: true
   validates :document, presence: true
@@ -18,7 +18,7 @@ class Onboarding::Policy < ApplicationRecord
       "onboarding_progress_#{account_id}",
       target: "onboarding-progress",
       partial: "onboarding/policies/progress",
-      locals: { account: account }
+      locals: {account: account}
     )
   end
 end
