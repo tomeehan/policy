@@ -24,12 +24,8 @@ UNIQUE_PASSWORD = Devise.friendly_token
 # end with _spec.rb. You can configure this pattern with the --pattern
 # option on the command line or in ~/.rspec, .rspec or `.rspec-local`.
 #
-# The following line is provided for convenience purposes. It has the downside
-# of increasing the boot-up time by auto-requiring all files in the support
-# directory. Alternatively, in the individual `*_spec.rb` files, manually
-# require only the support files necessary.
-#
-# Rails.root.glob('spec/support/**/*.rb').sort_by(&:to_s).each { |f| require f }
+# Load support files
+Rails.root.glob('spec/support/**/*.rb').sort_by(&:to_s).each { |f| require f }
 
 # Ensures that the test database schema matches the current schema file.
 # If there are pending migrations it will invoke `db:test:prepare` to
@@ -41,10 +37,13 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 RSpec.configure do |config|
-  # Use existing test fixtures
+  # Fixtures
   config.fixture_paths = [
-    Rails.root.join('test/fixtures')
+    Rails.root.join('spec/fixtures')
   ]
+
+  # File fixtures
+  config.file_fixture_path = Rails.root.join('spec/fixtures/files')
 
   config.use_transactional_fixtures = true
 
@@ -84,4 +83,12 @@ end
 
 RSpec.configure do |config|
   config.include RequestSpecHelpers, type: :request
+
+  # Include Warden test helpers for system specs
+  config.include Warden::Test::Helpers, type: :system
+  config.include TrixSystemTestHelper, type: :system
+
+  config.before(:each, type: :system) do
+    driven_by :selenium, using: :headless_chrome, screen_size: [1400, 900]
+  end
 end
