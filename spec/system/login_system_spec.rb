@@ -1,0 +1,69 @@
+require "rails_helper"
+
+RSpec.describe "Login System", type: :system do
+  before do
+    driven_by(:selenium_headless)
+  end
+
+  it "can login" do
+    login_with_email_and_password users(:one).email, UNIQUE_PASSWORD
+    expect(page).to have_selector("p", text: I18n.t("devise.sessions.signed_in"))
+  end
+
+  it "handles invalid email" do
+    login_with_email_and_password "missing@example.org", UNIQUE_PASSWORD
+    expect(page).to have_selector("p", text: I18n.t("devise.failure.invalid", authentication_keys: "Email"))
+  end
+
+  it "two factor required" do
+    login_with_email_and_password users(:twofactor).email, UNIQUE_PASSWORD
+    expect(page).to have_selector("h1", text: I18n.t("users.two_factor.header"))
+  end
+
+  it "two factor success with otp password" do
+    user = users(:twofactor)
+    login_with_email_and_password user.email, UNIQUE_PASSWORD
+    submit_otp user.current_otp
+    expect(page).to have_selector("p", text: I18n.t("devise.sessions.signed_in"))
+  end
+
+  it "two factor success with otp backup code" do
+    user = users(:twofactor)
+    login_with_email_and_password user.email, UNIQUE_PASSWORD
+    submit_otp user.otp_backup_codes[0]
+    expect(page).to have_selector("p", text: I18n.t("devise.sessions.signed_in"))
+  end
+
+  it "two factor fails with bad input" do
+    login_with_email_and_password users(:twofactor).email, UNIQUE_PASSWORD
+    submit_otp "invalid"
+    expect(page).to have_selector("p", text: I18n.t("users.sessions.create.incorrect_verification_code"))
+  end
+
+  it "two factor always enforced for separate user logins" do
+    login_with_email_and_password users(:twofactor).email, UNIQUE_PASSWORD
+    submit_otp "invalid"
+    expect(page).to have_selector("p", text: I18n.t("users.sessions.create.incorrect_verification_code"))
+
+    second_user = users(:twofactor).dup
+    second_user.update!(email: "twofactor2@example.org", password: "abcd1234", password_confirmation: "abcd1234", terms_of_service: true)
+    login_with_email_and_password second_user.email, "abcd1234"
+    submit_otp "invalid"
+    expect(page).to have_selector("p", text: I18n.t("users.sessions.create.incorrect_verification_code"))
+  end
+
+  private
+
+  def login_with_email_and_password(email, password)
+    visit new_user_session_path
+    fill_in "user[email]", with: email
+    fill_in "user[password]", with: password
+    find('input[name="commit"]').click
+  end
+
+  def submit_otp(otp)
+    expect(page).to have_selector("h1", text: I18n.t("users.two_factor.header"))
+    fill_in "otp_attempt", with: otp
+    find('input[name="commit"]').click
+  end
+end

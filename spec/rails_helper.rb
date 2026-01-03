@@ -84,4 +84,11 @@ end
 
 RSpec.configure do |config|
   config.include RequestSpecHelpers, type: :request
+
+  # Include Warden test helpers for system specs
+  config.include Warden::Test::Helpers, type: :system
+
+  config.before(:each, type: :system) do
+    driven_by :selenium, using: :headless_chrome, screen_size: [1400, 900]
+  end
 end
