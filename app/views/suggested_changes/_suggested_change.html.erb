@@ -1,0 +1,41 @@
+<%= turbo_frame_tag dom_id(suggested_change) do %>
+  <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
+    <div class="grid grid-cols-2 gap-4 mb-3">
+      <div>
+        <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Original</span>
+        <div class="mt-1 text-sm diff-original">
+          <% if suggested_change.insert_text? %>
+            <span class="text-gray-400 italic">(New content to add)</span>
+          <% else %>
+            <%= diff_original(suggested_change.original_text, suggested_change.suggested_text) %>
+          <% end %>
+        </div>
+      </div>
+      <div>
+        <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Suggested</span>
+        <div class="mt-1 text-sm diff-suggested">
+          <% if suggested_change.delete_text? %>
+            <span class="text-gray-400 italic">(Delete this text)</span>
+          <% else %>
+            <%= diff_suggested(suggested_change.original_text, suggested_change.suggested_text) %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div id="suggested_change_<%= suggested_change.id %>_error"></div>
+
+    <div class="flex gap-2">
+      <%= button_to "Apply",
+          apply_suggested_change_path(suggested_change),
+          method: :post,
+          class: "btn btn-primary btn-sm",
+          form: { data: { turbo_stream: true } } %>
+      <%= button_to "Dismiss",
+          dismiss_suggested_change_path(suggested_change),
+          method: :post,
+          class: "btn btn-ghost btn-sm",
+          form: { data: { turbo_stream: true } } %>
+    </div>
+  </div>
+<% end %>

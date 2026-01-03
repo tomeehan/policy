@@ -1,0 +1,5 @@
+<%= turbo_stream.remove dom_id(@suggested_change) %>
+
+<% if @issue.suggested_changes.reload.pending.empty? %>
+  <%= turbo_stream.remove dom_id(@issue) %>
+<% end %>

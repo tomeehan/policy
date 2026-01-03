@@ -1,0 +1,44 @@
+<%= turbo_frame_tag dom_id(issue) do %>
+  <div class="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+    <div class="flex items-center gap-2 mb-3">
+      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+        <%= case issue.issue_type
+            when 'conflict' then 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
+            when 'spelling' then 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+            when 'cqc_compliance' then 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+            end %>">
+        <%= issue.issue_type.titleize %>
+      </span>
+
+      <% if issue.conflict? && issue.related_policies.any? %>
+        <span class="text-sm text-gray-500 dark:text-gray-400">
+          Conflicts with: <%= issue.related_policies.pluck(:name).to_sentence %>
+        </span>
+      <% end %>
+    </div>
+
+    <p class="text-gray-700 dark:text-gray-300 mb-3"><%= issue.description %></p>
+
+    <% if issue.excerpt.present? %>
+      <blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 py-2 mb-4 text-gray-600 dark:text-gray-400 italic">
+        "<%= truncate(issue.excerpt, length: 200) %>"
+      </blockquote>
+    <% end %>
+
+    <% if issue.suggested_changes.pending.any? %>
+      <div class="space-y-3 mb-4">
+        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Suggested Changes:</p>
+        <%= render partial: "suggested_changes/suggested_change", collection: issue.suggested_changes.pending, as: :suggested_change %>
+      </div>
+    <% end %>
+
+    <div class="flex justify-end">
+      <%= button_to "Dismiss Issue",
+          policy_document_issue_path(policy_document, issue),
+          method: :patch,
+          params: { issue: { status: :dismissed } },
+          class: "text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200",
+          form: { data: { turbo_stream: true } } %>
+    </div>
+  </div>
+<% end %>

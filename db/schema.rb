@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_02_134411) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_02_150345) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -181,6 +181,31 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_02_134411) do
     t.datetime "created_at", null: false
     t.integer "status", default: 0, null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "issue_related_policies", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "issue_id", null: false
+    t.bigint "policy_document_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["issue_id", "policy_document_id"], name: "idx_on_issue_id_policy_document_id_66773f6609", unique: true
+    t.index ["issue_id"], name: "index_issue_related_policies_on_issue_id"
+    t.index ["policy_document_id"], name: "index_issue_related_policies_on_policy_document_id"
+  end
+
+  create_table "issues", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.text "description", null: false
+    t.text "excerpt"
+    t.integer "issue_type", null: false
+    t.bigint "policy_document_id", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "status"], name: "index_issues_on_account_id_and_status"
+    t.index ["account_id"], name: "index_issues_on_account_id"
+    t.index ["policy_document_id", "status"], name: "index_issues_on_policy_document_id_and_status"
+    t.index ["policy_document_id"], name: "index_issues_on_policy_document_id"
   end
 
   create_table "noticed_events", force: :cascade do |t|
@@ -370,8 +395,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_02_134411) do
     t.bigint "account_id", null: false
     t.text "content"
     t.datetime "created_at", null: false
+    t.datetime "last_scanned_at"
     t.string "name", null: false
     t.date "published_at"
+    t.text "scan_error"
+    t.integer "scan_status", default: 0, null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_policy_documents_on_account_id"
   end
@@ -384,6 +412,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_02_134411) do
     t.string "internal_name", default: ""
     t.string "name", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "suggested_changes", force: :cascade do |t|
+    t.integer "action_type", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.bigint "issue_id", null: false
+    t.text "original_text"
+    t.integer "status", default: 0, null: false
+    t.text "suggested_text", null: false
+    t.datetime "updated_at", null: false
+    t.index ["issue_id"], name: "index_suggested_changes_on_issue_id"
   end
 
   create_table "tool_members", force: :cascade do |t|
@@ -478,12 +517,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_02_134411) do
   add_foreign_key "accounts", "users", column: "owner_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "api_tokens", "users"
+  add_foreign_key "issue_related_policies", "issues"
+  add_foreign_key "issue_related_policies", "policy_documents"
+  add_foreign_key "issues", "accounts"
+  add_foreign_key "issues", "policy_documents"
   add_foreign_key "onboarding_policies", "account_users", column: "uploaded_by_id"
   add_foreign_key "onboarding_policies", "accounts"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
   add_foreign_key "policy_documents", "accounts"
+  add_foreign_key "suggested_changes", "issues"
   add_foreign_key "tool_members", "account_tools"
   add_foreign_key "tool_members", "account_users"
   add_foreign_key "tool_standards", "standards"

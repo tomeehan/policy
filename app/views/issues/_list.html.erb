@@ -1,0 +1,11 @@
+<% if issues.any? %>
+  <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mb-6">
+    <h2 class="text-lg font-semibold text-amber-800 dark:text-amber-200 mb-4">
+      <%= pluralize(issues.count, "Issue") %> Found
+    </h2>
+
+    <div class="space-y-4">
+      <%= render partial: "issues/issue", collection: issues, as: :issue, locals: { policy_document: policy_document } %>
+    </div>
+  </div>
+<% end %>

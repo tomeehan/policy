@@ -19,7 +19,19 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :policy_documents, path: "policies"
+  resources :policy_documents, path: "policies" do
+    member do
+      post :scan
+    end
+    resources :issues, only: [:index, :show, :update]
+  end
+
+  resources :suggested_changes, only: [] do
+    member do
+      post :apply
+      post :dismiss
+    end
+  end
 
   authenticated :user do
     root to: "dashboard#show", as: :user_root

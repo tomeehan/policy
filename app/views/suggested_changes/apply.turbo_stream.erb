@@ -1,0 +1,16 @@
+<%= turbo_stream.remove dom_id(@suggested_change) %>
+
+<% if @issue.suggested_changes.reload.pending.empty? %>
+  <%= turbo_stream.remove dom_id(@issue) %>
+<% end %>
+
+<%# Refresh the policy content to show the applied change %>
+<%= turbo_stream.update "policy-content" do %>
+  <% if @policy_document.content.present? %>
+    <div class="prose dark:prose-invert max-w-none">
+      <%= render_markdown(@policy_document.reload.content, strip_title: @policy_document.name) %>
+    </div>
+  <% else %>
+    <p class="text-gray-600 dark:text-gray-400">No content available for this policy.</p>
+  <% end %>
+<% end %>

@@ -91,6 +91,9 @@ gem "pandoc-ruby"
 # Render markdown
 gem "kramdown"
 
+# Diff display for suggested changes
+gem "diffy"
+
 gem "ruby-openai", "~> 8.3"
 
 gem "dotenv-rails", "~> 3.2", groups: [:development, :test]
